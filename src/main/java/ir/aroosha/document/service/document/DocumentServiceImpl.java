@@ -37,13 +37,11 @@ public class DocumentServiceImpl implements DocumentService {
         Document savedDocument = documentRepository.save(document);
         for (String tagName : documentSaveUpdateRequest.getTags()) {
             Tag tag = tagService.getOrCreate(tagName);
-
             DocumentTag documentTag = new DocumentTag();
             documentTag.setTag(tag);
             documentTag.setDocument(document);
             documentTag.setId(new DocumentTagId(tag.getId(), savedDocument.getId()));
             documentTagRepository.save(documentTag);
-
         }
         return savedDocument;
     }
